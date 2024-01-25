@@ -18,11 +18,6 @@ const ListElement = ({ Key, LastModified, Size }: ImageType) => {
             navigator.clipboard.writeText(url).then(() =>
               toast("Copied to clipboard", {
                 icon: "📋",
-                position: "top-right",
-                style: {
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  color: "white",
-                },
               })
             );
           }}

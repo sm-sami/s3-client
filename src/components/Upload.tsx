@@ -17,11 +17,6 @@ const Upload = () => {
     if (!file) {
       toast.error("No file selected", {
         icon: "🚫",
-        position: "top-right",
-        style: {
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          color: "white",
-        },
       });
       return;
     }
@@ -29,11 +24,6 @@ const Upload = () => {
     if (!name) {
       toast.error("No name is provided", {
         icon: "🚫",
-        position: "top-right",
-        style: {
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          color: "white",
-        },
       });
       return;
     }
@@ -43,11 +33,6 @@ const Upload = () => {
     if (!postUrlRes.ok) {
       toast.error("Failed to get presigned url", {
         icon: "😔",
-        position: "top-right",
-        style: {
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          color: "white",
-        },
       });
       return;
     }
@@ -64,20 +49,10 @@ const Upload = () => {
     if (res.ok) {
       toast.success(`Uploaded successfully: ${path}${name}`, {
         icon: "🚀",
-        position: "top-right",
-        style: {
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          color: "white",
-        },
       });
     } else {
       toast.error("Failed to upload", {
         icon: "😔",
-        position: "top-right",
-        style: {
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
-          color: "white",
-        },
       });
     }
 
