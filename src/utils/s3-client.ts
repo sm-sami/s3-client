@@ -3,6 +3,7 @@ import {
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import {
   AWS_REGION,
   AWS_ACCESS_KEY,
@@ -32,19 +33,17 @@ export const getImages = async () => {
     Bucket: AWS_BUCKET,
   });
 
-  const response = await client.send(command);
-  return listImagesSchema.parse(response.Contents);
+  const res = await client.send(command);
+  return listImagesSchema.parse(res.Contents);
 };
 
-export const uploadImage = async (key: string, file: any) => {
-  const client = getS3Client();
+export const createPreSignedUrl = async (key: string) => {
   const command = new PutObjectCommand({
     Bucket: AWS_BUCKET,
     Key: key,
-    Body: file,
     ACL: "public-read",
   });
 
-  const res = await client.send(command);
-  return res.$metadata.httpStatusCode;
+  // @ts-ignore
+  return getSignedUrl(getS3Client(), command, { expiresIn: 3600 });
 };

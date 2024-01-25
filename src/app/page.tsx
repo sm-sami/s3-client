@@ -1,9 +1,5 @@
 import { ListImages, Upload } from "@/components";
-
-const getImages = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/images`);
-  return await res.json();
-};
+import { getImages } from "@/utils/s3-client";
 
 export default async function Home() {
   const images = await getImages();

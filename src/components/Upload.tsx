@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const Upload = () => {
@@ -11,7 +11,7 @@ const Upload = () => {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
-  const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpload = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!file) {
@@ -38,13 +38,27 @@ const Upload = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("key", `${path || ""}${name}`);
-    formData.append("image", file);
+    const postUrlRes = await fetch(`/api/presigned-url?key=${path}${name}`);
 
-    const res = await fetch(`/api/images`, {
-      method: "POST",
-      body: formData,
+    if (!postUrlRes.ok) {
+      toast.error("Failed to get presigned url", {
+        icon: "😔",
+        position: "top-right",
+        style: {
+          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          color: "white",
+        },
+      });
+      return;
+    }
+
+    const { url } = await postUrlRes.json();
+    const res = await fetch(url, {
+      method: "PUT",
+      body: file,
+      headers: {
+        "Content-Type": file.type,
+      },
     });
 
     if (res.ok) {
