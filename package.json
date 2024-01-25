@@ -4,8 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write src/app/**/*.{ts,tsx}"
+    "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.499.0",
